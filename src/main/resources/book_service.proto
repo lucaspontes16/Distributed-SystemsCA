@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.example.bookservice";
+option java_outer_classname = "BookServiceProto";
+
+// Message to index and update a book
+message IndexBookRequest {
+  string bookID = 1;
+  string bookTitle = 2;
+  string author = 3;
+  string description = 4;
+}
+
+message UpdateBookRequest {
+  string bookID = 1;
+  string bookTitle = 2;
+  string author = 3;
+  string description = 4;
+}
+
+message IndexBookResponse {
+  string message = 1;
+}
+
+message UpdateBookResponse {
+  string message = 1;
+}
+
+// Message to search a book 
+message SearchBooksRequest {
+  string query = 1;
+  int32 page_number = 2;
+  int32 page_size = 3;
+}
+
+message Book {
+  string bookID = 1;
+  string bookTitle = 2;
+  string author = 3;
+  string description = 4;
+}
+
+message SearchBooksResponse {
+  repeated Book books = 1;
+}
+
+// Service definition 
+service BookService {
+  rpc IndexBook (IndexBookRequest) returns (IndexBookResponse);
+  rpc UpdateBook (UpdateBookRequest) returns (UpdateBookResponse);
+  rpc SearchBooks (SearchBooksRequest) returns (stream SearchBooksResponse);
+}
