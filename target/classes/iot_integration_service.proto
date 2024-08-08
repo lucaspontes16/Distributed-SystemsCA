@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.example.iot";
+option java_outer_classname = "IoTIntegrationServiceProto";
+
+// IoT devices monitoring message 
+message IoTDevMonitoringRequest {
+  string sensorId = 1;
+}
+
+message IoTDevMonitoringResponse {
+  string sensorId = 1;
+  string sensorType = 2;
+  string sensorStatus = 3;
+  double tempValue = 4;
+  double lightValue = 5;
+  double noiseLevel = 6;
+}
+
+// Iot devices control messages 
+message DeviceControlRequest {
+  string deviceId = 1;
+  string action = 2;
+  double value = 3;
+}
+
+message DeviceControlResponse {
+  string message = 1;
+  string doorStatus = 2; // DoorOpen, DoorClose, DoorLock
+}
+
+// service definiiton
+service IoTIntegrationService {
+  rpc IoTDevMonitoringServ (IoTDevMonitoringRequest) returns (IoTDevMonitoringResponse);
+  rpc DeviceControl (DeviceControlRequest) returns (DeviceControlResponse);
+}

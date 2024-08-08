@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.example.usermanager";
+option java_outer_classname = "UserManagerServiceProto";
+
+// User message authentication
+message UserAuthenticateRequest {
+  string userName = 1;
+  string password = 2;
+}
+
+message UserAuthenticateResponse {
+  bool authenticated = 1;
+  string message = 2;
+}
+
+// Permission check user message 
+message PermissionCheckRequest {
+  string userName = 1;
+  string resource = 2;
+}
+
+message PermissionCheckResponse {
+  bool hasPermission = 1;
+  string message = 2;
+}
+
+// Service definition 
+service UserManagerService {
+  rpc UserAuthenticate (UserAuthenticateRequest) returns (UserAuthenticateResponse);
+  rpc PermissionCheck (PermissionCheckRequest) returns (PermissionCheckResponse);
+}
