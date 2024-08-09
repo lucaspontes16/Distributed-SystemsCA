@@ -14,60 +14,74 @@ import com.example.iot.IoTDevMonitoringResponse;
 import com.example.iot.IoTIntegrationServiceGrpc;
 
 
+// The client class
 public class IoTIntegrationServiceClient {
 
+	// Main method that demonstrates how to use the client 
     public static void main(String[] args) {
+    	//Create a channel to the server 
         ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 8082)
                 .usePlaintext()
                 .build();
 
-        IoTIntegrationServiceGrpc.IoTIntegrationServiceBlockingStub stub = IoTIntegrationServiceGrpc.newBlockingStub(channel);
+        try {
+        	//Create a blocking stub for the service 
+            IoTIntegrationServiceGrpc.IoTIntegrationServiceBlockingStub stub = IoTIntegrationServiceGrpc.newBlockingStub(channel);
 
-        // Monitorar sensor
-        IoTDevMonitoringRequest monitoringRequest = IoTDevMonitoringRequest.newBuilder()
-                .setSensorId("sensor1")
-                .build();
-        IoTDevMonitoringResponse monitoringResponse = stub.ioTDevMonitoringServ(monitoringRequest);
-        System.out.println("Sensor ID: " + monitoringResponse.getSensorId());
-        System.out.println("Sensor Type: " + monitoringResponse.getSensorType());
-        System.out.println("Temperature: " + monitoringResponse.getTempValue());
-        System.out.println("Light Value: " + monitoringResponse.getLightValue());
-        System.out.println("Noise Level: " + monitoringResponse.getNoiseLevel());
+            // Resquest for Sensor monitoring 
+            IoTDevMonitoringRequest monitoringRequest = IoTDevMonitoringRequest.newBuilder()
+                    .setSensorId("sensor1")
+                    .build();
+            //Call the sensor monitoring service 
+            IoTDevMonitoringResponse monitoringResponse = stub.ioTDevMonitoringServ(monitoringRequest);
+            //the response printing 
+            System.out.println("Sensor ID: " + monitoringResponse.getSensorId());
+            System.out.println("Sensor Type: " + monitoringResponse.getSensorType());
+            System.out.println("Temperature: " + monitoringResponse.getTempValue());
+            System.out.println("Light Value: " + monitoringResponse.getLightValue());
+            System.out.println("Noise Level: " + monitoringResponse.getNoiseLevel());
 
-        // Controle de dispositivo
-        DeviceControlRequest controlRequest = DeviceControlRequest.newBuilder()
-                .setDeviceId("door1")
-                .setAction("open_door")
-                .build();
-        DeviceControlResponse controlResponse = stub.deviceControl(controlRequest);
-        System.out.println(controlResponse.getMessage());
-        System.out.println("Door Status: " + controlResponse.getDoorStatus());
-
-        channel.shutdown();
+            // Request Device control
+            DeviceControlRequest controlRequest = DeviceControlRequest.newBuilder()
+                    .setDeviceId("door1")
+                    .setAction("open_door")
+                    .build();
+            //Call the device control service 
+            DeviceControlResponse controlResponse = stub.deviceControl(controlRequest);
+           //Prints the response 
+            System.out.println(controlResponse.getMessage());
+            System.out.println("Door Status: " + controlResponse.getDoorStatus());
+        } finally {
+        	//close the channel
+            channel.shutdown();
+        }
     }
+
+    //Main method that demonstrate how to discover the service 
     public static void main1(String[] args) throws IOException, InterruptedException {
-        // Descobrir o serviço com JmDNS usando a classe JmDNSManager
+        // Create a JMDNS mananger 
         JmDNSManager jmDNSManager = new JmDNSManager();
+        //Discover the service 
         ServiceInfo serviceInfo = jmDNSManager.discoverService("IoTIntegrationService");
 
         if (serviceInfo != null) {
+        	//Get the service host and port 
             String host = serviceInfo.getHostAddresses()[0];
             int port = serviceInfo.getPort();
 
-            // Conectar ao servidor gRPC descoberto
+            // Conects to the GRPC server discoverd 
             ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port)
                     .usePlaintext()
                     .build();
 
-            IoTIntegrationServiceGrpc.IoTIntegrationServiceBlockingStub stub = IoTIntegrationServiceGrpc.newBlockingStub(channel);
-
-            // Faça chamadas gRPC como de costume...
+            // GRPC calling 
 
             channel.shutdown();
         } else {
             System.out.println("Service not found");
         }
 
+        //close the jmDNSManager
         jmDNSManager.close();
     }
 }
