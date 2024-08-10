@@ -16,7 +16,20 @@ import com.example.iot.IoTIntegrationServiceGrpc;
 
 // The client class
 public class IoTIntegrationServiceClient {
+    private final ManagedChannel channel;
+    private final IoTIntegrationServiceGrpc.IoTIntegrationServiceBlockingStub stub;
+    public IoTIntegrationServiceClient() {
+        this.channel = ManagedChannelBuilder.forAddress("localhost", 8082).usePlaintext().build();
+        this.stub = IoTIntegrationServiceGrpc.newBlockingStub(channel);
+    }
 
+    public IoTDevMonitoringResponse monitorSensor(IoTDevMonitoringRequest request) {
+        return stub.ioTDevMonitoringServ(request);
+    }
+
+    public void shutdown() {
+        channel.shutdown();
+    }
 	// Main method that demonstrates how to use the client 
     public static void main(String[] args) {
     	//Create a channel to the server 
@@ -83,5 +96,9 @@ public class IoTIntegrationServiceClient {
 
         //close the jmDNSManager
         jmDNSManager.close();
+    }
+
+    public DeviceControlResponse controlDevice(DeviceControlRequest request) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

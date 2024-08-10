@@ -12,10 +12,13 @@ C:\Users\lucas\eclipse-workspace\smartLibrary\src\main\java\services\server\User
 C:\Users\lucas\eclipse-workspace\smartLibrary\src\main\java\client\services\BookServiceClient.java
 C:\Users\lucas\eclipse-workspace\smartLibrary\src\main\java\com\example\bookservice\BookServiceProto.java
 C:\Users\lucas\eclipse-workspace\smartLibrary\src\main\java\com\example\bookservice\IndexBookResponseOrBuilder.java
+C:\Users\lucas\eclipse-workspace\smartLibrary\src\main\java\clientGUI\IoTClientGUI.java
 C:\Users\lucas\eclipse-workspace\smartLibrary\src\main\java\services\server\package-info.java
+C:\Users\lucas\eclipse-workspace\smartLibrary\src\main\java\clientGUI\clientController.java
 C:\Users\lucas\eclipse-workspace\smartLibrary\src\main\java\com\example\bookservice\SearchBooksRequestOrBuilder.java
 C:\Users\lucas\eclipse-workspace\smartLibrary\src\main\java\com\example\iot\DeviceControlRequest.java
 C:\Users\lucas\eclipse-workspace\smartLibrary\src\main\java\services\server\IoTIntegrationServiceImpl.java
+C:\Users\lucas\eclipse-workspace\smartLibrary\src\main\java\clientGUI\bookServiceController.java
 C:\Users\lucas\eclipse-workspace\smartLibrary\src\main\java\client\services\UserManagerServiceClient.java
 C:\Users\lucas\eclipse-workspace\smartLibrary\src\main\java\com\example\usermanager\UserAuthenticateResponseOrBuilder.java
 C:\Users\lucas\eclipse-workspace\smartLibrary\src\main\java\com\example\bookservice\UpdateBookResponseOrBuilder.java
